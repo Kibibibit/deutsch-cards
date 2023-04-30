@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
 import axios from 'axios';
+import useApi from './utils/use-api';
+import useSheetLoader from './utils/use-sheet-loader';
 
 function App() {
-
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheet}/values/C4:C9?key=${k}`
-  axios.get(url).then(response => console.log(response))
+  
+  useSheetLoader()
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

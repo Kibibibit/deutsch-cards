@@ -1,18 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { initialStoreState, newSheet } from "./interface";
+import { SheetMetadata, initialStoreState, newSheet } from "./interface";
 import { hasNot } from "../functional/has-not";
 import { log } from "../utils/log";
 
-export const storeSlice = createSlice({
-    name:'store',
+const sheetsSlice = createSlice({
+    name:'sheets',
     initialState: initialStoreState,
     reducers: {
-        addSheet: (state, action: PayloadAction<string>) => {
-            if (hasNot(action.payload)(state.sheets)) {
-                log.info("Added new sheet")
-                state.sheets[action.payload] = newSheet(action.payload)
+        addSheet: (state, action: PayloadAction<SheetMetadata,string>) => {
+            if (hasNot(action.payload.sheetId)(state.sheets)) {
+                log.info(`Added new sheet ${action.payload.sheetName} (${action.payload.sheetId})`)
+                state.sheets[action.payload.sheetId] = newSheet(action.payload)
             }
-            
-        }
+        },
+        addNounData: (state) => {
+
+        },
     }
 })
+
+
+export const { addSheet, addNounData } = sheetsSlice.actions;
+export default sheetsSlice.reducer;

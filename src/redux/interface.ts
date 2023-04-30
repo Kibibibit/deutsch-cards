@@ -1,16 +1,21 @@
 
 export interface Sheet {
+    metadata: SheetMetadata
+}
+
+export interface SheetMetadata {
+    sheetId: string
     sheetName: string
 }
 
-export const newSheet= (sheetName:string): Sheet  => {
+export const newSheet= (metadata :SheetMetadata): Sheet  => {
     return {
-        sheetName:sheetName
+        metadata
     }
 }
 
 export interface StoreState {
-    sheets: {[name: string]:Sheet}
+    sheets: {[id: string]:Sheet}
     loaded: boolean
 }
 
