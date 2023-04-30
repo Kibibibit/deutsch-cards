@@ -2,8 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheet}/values/C4:C9?key=${k}`
+  axios.get(url).then(response => console.log(response))
+
   return (
     <div className="App">
       <header className="App-header">
