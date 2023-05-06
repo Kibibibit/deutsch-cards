@@ -1,6 +1,5 @@
 import axios from "axios"
 import { apiKey, baseUrl } from "./constants"
-import { Sheet } from "../redux/interface"
 
 const useApi = () => {
 

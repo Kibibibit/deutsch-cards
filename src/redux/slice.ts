@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { SheetMetadata, initialStoreState, newSheet } from "./interface";
-import { hasNot } from "../functional/has-not";
+import {  Noun, initialStoreState, newSheet } from "./interface";
 import { log } from "../utils/log";
+import { append, compose, includes, not} from "ramda";
 
 const sheetsSlice = createSlice({
     name:'sheets',
     initialState: initialStoreState,
     reducers: {
-        addSheet: (state, action: PayloadAction<SheetMetadata,string>) => {
-            if (hasNot(action.payload.sheetId)(state.sheets)) {
-                log.info(`Added new sheet ${action.payload.sheetName} (${action.payload.sheetId})`)
-                state.sheets[action.payload.sheetId] = newSheet(action.payload)
+        addNoun: (state, action: PayloadAction<Noun,string>) => {
+            if (compose(not, includes(action.payload))(state.nouns)) {
+                log.info(`Added new noun ${action.payload.english}`)
+                state.nouns = append(action.payload, state.nouns)
             }
         },
         addNounData: (state) => {
@@ -20,5 +20,5 @@ const sheetsSlice = createSlice({
 })
 
 
-export const { addSheet, addNounData } = sheetsSlice.actions;
+export const { addNoun } = sheetsSlice.actions;
 export default sheetsSlice.reducer;

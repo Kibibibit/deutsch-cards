@@ -1,7 +1,6 @@
-import { forEach, map } from "ramda"
+import { equals, forEach, map } from "ramda"
 import useApi from "./use-api"
 import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { addSheet } from "../redux/slice"
 
 const useSheetLoader = async () => {
 
@@ -9,16 +8,22 @@ const useSheetLoader = async () => {
     const dispatch = useAppDispatch()
 
     const metadataResponse = await api.getSheetMetadata()
-
+    console.log(metadataResponse)
     const sheetsData = metadataResponse?.data?.sheets || []
 
-    forEach((sheet: any) => {
-        dispatch(addSheet({sheetId: sheet.properties.sheetId, sheetName:sheet.properties.title}))
-    })(sheetsData);
+    console.log(sheetsData)
 
     const sheetTitles = map((sheet: any) => sheet.properties.title)(sheetsData)
     forEach((sheet: any)=> {
-        api.getSheetData(sheet).then(console.log)
+        api.getSheetData(sheet).then((response) => {
+            if (equals(sheet)("Nouns")) {
+                
+                forEach((item) => {
+                    console.log(item)
+                })(response?.data.values)
+
+            }
+        })
     })(sheetTitles)
 
     
