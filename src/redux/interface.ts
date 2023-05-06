@@ -5,7 +5,7 @@ export interface Sheet {
 
 export interface Noun {
     english: string,
-    gender: "der" | "die" | "die (plural)" | "das",
+    gender: string | "der" | "die" | "die (plural)" | "das",
     singular: string,
     plural: string
 }
@@ -13,7 +13,13 @@ export interface Noun {
 export interface Verb {
     english: string,
     infinitive: string,
-    type: "Modal" | "Sein/Haben" | "Regular" | "Irregular"
+    type: string | "Modal" | "Sein/Haben" | "Regular" | "Irregular",
+    first: string,
+    second: string,
+    third: string,
+    wir: string,
+    ihr: string,
+    formal: string
 }
 export interface SheetMetadata {
     sheetId: string
@@ -27,13 +33,13 @@ export const newSheet= (metadata :SheetMetadata): Sheet  => {
 }
 
 export interface StoreState {
-    nouns: Noun[]
-    verbs: Verb[]
+    nouns: {[key: string]: Noun}
+    verbs: {[key: string]: Verb}
     loaded: boolean
 }
 
 export const initialStoreState: StoreState = {
-    nouns:[],
-    verbs:[],
+    nouns:{},
+    verbs:{},
     loaded: false,
 }
