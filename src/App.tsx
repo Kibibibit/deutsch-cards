@@ -1,4 +1,4 @@
-
+import NounPage from './app/components/noun-page';
 import useSheetLoader from './utils/use-sheet-loader';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div>
-      Hi
+      <NounPage/>
     </div>
   );
 }
