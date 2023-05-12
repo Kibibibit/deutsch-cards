@@ -16,7 +16,7 @@ const BaseCard = ({getWordSet, getWord, getWords, wordKey}: BaseCardProps): JSX.
     const word = useAppSelector(getWord(wordKey))
     const wordSet = useAppSelector(getWordSet)
 
-    const otherInds = [1,2,3]
+    const otherInds = [4,2,10]
     const otherKeys = map((i: number)=>wordSet[i])(otherInds)
 
     const words =  useAppSelector(getWords(otherKeys))
