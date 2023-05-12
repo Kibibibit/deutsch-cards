@@ -1,6 +1,6 @@
-import { anyPass, compose, equals, filter, forEach, includes, map } from "ramda"
+import { anyPass, compose, equals, filter, forEach, includes, map, not } from "ramda"
 import useApi from "./use-api"
-import { Noun, Verb } from "../redux/interface"
+import { Word } from "../redux/interface"
 import { useAppDispatch} from "../redux/hooks"
 import { addNoun, addVerb } from "../redux/slice"
 
@@ -22,14 +22,20 @@ const useSheetLoader = async () => {
                 
                 forEach((item: string[]) => {
 
-                    const noun: Noun = {
+                    const noun: Word = {
                         english: item[0],
-                        gender: item[1],
-                        singular: item[2],
-                        plural: item[3],
+                        options: {
+                            gender: item[1],
+                            singular: item[2],
+                            plural: item[3],
+                        }
                     }
 
-                    compose(dispatch, addNoun)(noun)
+                    if (compose(not,equals("English"))(item[0])) {
+                        compose(dispatch, addNoun)(noun)
+                    }
+
+                    
 
                 })(response?.data.values)
 
@@ -37,19 +43,25 @@ const useSheetLoader = async () => {
             if (equals(sheet)("Verbs")) {
                 forEach((item: string[]) => {
                     
-                    const verb: Verb = {
+                    const verb: Word = {
                         english: item[0],
-                        infinitive: item[1],
-                        type: item[2],
-                        first: item[3],
-                        second: item[4],
-                        third: item[5],
-                        wir: item[6],
-                        ihr: item[7],
-                        formal: item[8]
+                        options: {
+                            infinitive: item[1],
+                            type: item[2],
+                            first: item[3],
+                            second: item[4],
+                            third: item[5],
+                            wir: item[6],
+                            ihr: item[7],
+                            formal: item[8]
+                        }
                     }
 
-                    compose(dispatch, addVerb)(verb)
+                    if (compose(not,equals(item[0]))("English")) {
+                        compose(dispatch, addVerb)(verb)
+                    }
+
+                    
 
                 })(response?.data.values)
             }

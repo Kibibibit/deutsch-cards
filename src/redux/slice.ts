@@ -1,20 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {  Noun, Verb, initialStoreState } from "./interface";
+import { Word, Noun, Verb, initialStoreState } from "./interface";
 import { hasNot } from "../functional/has-not";
 
 const sheetsSlice = createSlice({
     name:'sheets',
     initialState: initialStoreState,
     reducers: {
-        addNoun: (state, action: PayloadAction<Noun,string>) => {
+        addNoun: (state, action: PayloadAction<Word,string>) => {
             if (hasNot(action.payload.english)(state.nouns)) {
-                console.log(`Added new noun "${action.payload.english}" ("${action.payload.singular}")`)
+                const options: Noun = action.payload.options as Noun
+                console.log(`Added new noun "${action.payload.english}" ("${options.singular}")`)
                 state.nouns[action.payload.english] = action.payload
             }
         },
-        addVerb: (state, action: PayloadAction<Verb,string>) => {
+        addVerb: (state, action: PayloadAction<Word,string>) => {
             if (hasNot(action.payload.english)(state.verbs)) {
-                console.log(`Added new verb "${action.payload.english}" ("${action.payload.infinitive}")`)
+                const options: Verb = action.payload.options as Verb
+                console.log(`Added new verb "${action.payload.english}" ("${options.infinitive}")`)
                 state.verbs[action.payload.english] = action.payload
             }
         }
